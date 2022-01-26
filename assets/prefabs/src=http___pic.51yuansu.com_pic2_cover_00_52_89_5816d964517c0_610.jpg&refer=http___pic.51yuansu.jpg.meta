@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "f02f3ef4-7d17-404b-ad50-48b06aa6530e",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 512,
+  "height": 512,
+  "platformSettings": {},
+  "subMetas": {
+    "src=http___pic.51yuansu.com_pic2_cover_00_52_89_5816d964517c0_610.jpg&refer=http___pic.51yuansu": {
+      "ver": "1.0.6",
+      "uuid": "1e4b1079-881d-42bd-93b6-2906513fc873",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "f02f3ef4-7d17-404b-ad50-48b06aa6530e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 512,
+      "height": 512,
+      "rawWidth": 512,
+      "rawHeight": 512,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

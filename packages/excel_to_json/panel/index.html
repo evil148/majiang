@@ -1,0 +1,11 @@
+<h2>excel_to_json</h2>
+<hr />
+<div>State: <span id="label">{{msg}}</span></div>
+<hr />
+<ui-input placeholder="请选择输入excel目录" readonly="readonly" v-value="excel_dir"></ui-input>
+<ui-button id="btn" @confirm="btn_excel">输入excel目录</ui-button>
+
+<ui-input placeholder="请选择输出json目录" readonly="readonly"  v-value="json_dir"></ui-input>
+<ui-button id="btn" @confirm="btn_json">输出json目录</ui-button>
+
+<ui-button id="btn" @confirm="btn_go">GO！</ui-button>

@@ -1,0 +1,29 @@
+{
+  "name": "excel_to_json",
+  "version": "0.0.1",
+  "description": "excel转json",
+  "author": "codercmd",
+  "main": "main.js",
+  "main-menu": {
+    "i18n:MAIN_MENU.package.title/excel_to_json/open": {
+      "message": "excel_to_json:open"
+    },
+    "i18n:MAIN_MENU.package.title/excel_to_json/hello": {
+      "message": "excel_to_json:say-hello"
+    }
+  },
+  "panel": {
+    "main": "panel/index.js",
+    "type": "dockable",
+    "title": "excel_to_json",
+    "width": 400,
+    "height": 300
+  },
+  "devDependencies": {
+    "electron-store": "^6.0.1",
+    "node-xlsx": "^0.16.1"
+  },
+  "dependencies": {
+    "node-xlsx": "^0.16.1"
+  }
+}
