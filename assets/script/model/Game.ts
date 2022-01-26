@@ -78,7 +78,7 @@ export default class Game extends cc.Component {
         var array = [
             1, 1, 1, 1,
             1, 1, 1, 1,
-            1, 1, 1, 1,
+            2, 3, 3, 2,
             1, 1, 1, 1,
         ]
 
@@ -97,16 +97,14 @@ export default class Game extends cc.Component {
 
     }
 
-    needReTrgger: boolean;
     ChangeFlag(oldFlag: Flag, newId: number): Flag {
         var newFlag = this.CreateFlag(newId);
         this.curPool[oldFlag.x][oldFlag.y] = newFlag;
         newFlag.RefreshState(oldFlag.x, oldFlag.y, oldFlag.last, oldFlag.next);
         newFlag.SetUI(oldFlag.ui);
-        newFlag.RefreshTrggerType();
+        newFlag.CheckTrgger();
 
         this.PopFlag(oldFlag);
-        this.needReTrgger = true;
         return newFlag;
     }
 

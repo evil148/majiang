@@ -36,14 +36,14 @@ export default class TrggerState implements IState<Game> {
         this.trggerCount = 0;
 
         game.ForEach((e: Flag) => {
-            e.RefreshTrggerType();
-        });;
+            e.CheckTrgger();
+        });
 
         this.trggerlevel = Number.MAX_VALUE;
         game.ForEach((e: Flag) => {
             if (!e.HasTrgger()) {
-                if (e.trggerType < this.trggerlevel) {
-                    this.trggerlevel = e.trggerType;
+                if (e.GetTrggerLevel() < this.trggerlevel) {
+                    this.trggerlevel = e.GetTrggerLevel();
                 }
             }
         });;
@@ -57,14 +57,14 @@ export default class TrggerState implements IState<Game> {
             return;
         }
         if (this.preFlag && this.preFlag.IsTrggering()) {
-            cc.log("等待上个flag处理结束");
+            cc.log("等待上个flag处理结束:" + this.preFlag.config.name + ":" + this.preFlag?.activeSkill?.state);
             return;
         }
 
         while (true) {
             var hasT = this.curFlag.HasTrgger();
-            var canT = this.curFlag.GetTrggerType() != 0;
-            var needT = this.curFlag.GetTrggerType() == this.trggerlevel;
+            var canT = this.curFlag.GetTrggerLevel() != 0;
+            var needT = this.curFlag.GetTrggerLevel() == this.trggerlevel;
             var checkT = this.curFlag.CheckTrgger();
 
             if (hasT) {
@@ -95,8 +95,8 @@ export default class TrggerState implements IState<Game> {
         this.trggerlevel = Number.MAX_VALUE;
         this.game.ForEach((e: Flag) => {
             if (!e.HasTrgger()) {
-                if (e.trggerType < this.trggerlevel) {
-                    this.trggerlevel = e.trggerType;
+                if (e.GetTrggerLevel() < this.trggerlevel) {
+                    this.trggerlevel = e.GetTrggerLevel();
                 }
             }
         });;
@@ -105,8 +105,7 @@ export default class TrggerState implements IState<Game> {
 
     CheckTrggerEnd(isFinal: boolean = false): boolean {
         if (this.curFlag == null) {
-            if (this.trggerCount != 16 || this.game.needReTrgger) {
-                this.game.needReTrgger = false;
+            if (this.trggerCount != 16) {
                 this.TrggerStart();
                 if (!isFinal) this.time = 999;
             } else {

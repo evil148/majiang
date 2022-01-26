@@ -13,6 +13,8 @@ import FlagMerge from "../flag/FlagMerge";
 import FlagMul from "../flag/FlagMul";
 import FlagRichMan from "../flag/FlagRichMan";
 import FlagSub from "../flag/FlagSub";
+import Skill from "../skill/Skill";
+import SkillMerge from "../skill/SkillMerge";
 import ConfigData, { FlagConfig, FlagType } from "./ConfigData";
 import Flag from "./Flag";
 
@@ -27,14 +29,14 @@ export default class FlagFactory {
         var cfg = ConfigData.Ins.GetCfg(id);
 
         switch (cfg.type) {
-            case FlagType.Baby: return new FlagMerge(cfg);
-            case FlagType.Pupil: return new FlagMerge(cfg);
-            case FlagType.MiddleStudent: return new FlagMerge(cfg);
-            case FlagType.CollegeStudent: return new FlagMerge(cfg);
-            case FlagType.Master: return new FlagMerge(cfg);
-            case FlagType.Professor: return new FlagMerge(cfg);
-            case FlagType.Principal: return new FlagMerge(cfg);
-            case FlagType.Dean: return new FlagMerge(cfg);
+            case FlagType.Baby: return new Flag(cfg);
+            case FlagType.Pupil: return new Flag(cfg);
+            case FlagType.MiddleStudent: return new Flag(cfg);
+            case FlagType.CollegeStudent: return new Flag(cfg);
+            case FlagType.Master: return new Flag(cfg);
+            case FlagType.Professor: return new Flag(cfg);
+            case FlagType.Principal: return new Flag(cfg);
+            case FlagType.Dean: return new Flag(cfg);
             case FlagType.Add: return new FlagAdd(cfg);
             case FlagType.Sub: return new FlagSub(cfg);
             case FlagType.Mul: return new FlagMul(cfg);
@@ -47,6 +49,9 @@ export default class FlagFactory {
 
         }
     }
-
-    // update (dt) {}
+    
+    GetSkill(id: number):any {
+        var cfg = ConfigData.Ins.GetSkillCfg(id);
+        return new SkillMerge();
+    }
 }

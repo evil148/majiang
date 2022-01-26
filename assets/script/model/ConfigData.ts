@@ -151,6 +151,9 @@ export default class ConfigData extends cc.Component {
 
     }
 
+    GetSkillCfg(id: number): FlagConfig {
+        return null;
+    }
     GetCanUse(): FlagConfig {
         var id = Math.ceil(Math.random() * 13);
         return this.GetCfg(id);

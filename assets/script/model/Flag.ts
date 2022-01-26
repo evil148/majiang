@@ -5,9 +5,11 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import Skill from "../skill/Skill";
 import FlagRender from "../view/FlagRender";
 import ConfigData, { FlagConfig, FlagType } from "./ConfigData";
 import FlagCache from "./FlagCache";
+import FlagFactory from "./FlagFactory";
 import Game from "./Game";
 import Tool from "./Tool";
 
@@ -44,7 +46,7 @@ export default class Flag {
 
     StartTrgger() {
         this.state = FlagState.Trgger;
-        this.Trgger();
+        this.StartExcute();
     }
 
     EndTrgger() {
@@ -64,6 +66,8 @@ export default class Flag {
         this.isUse = true;
         this.game = game;
         this.flagPool = game.curPool;
+        this.skillPool = new Array<Skill>();
+        this.AddSkill(0);
     }
 
     clear() {
@@ -84,8 +88,6 @@ export default class Flag {
         this.x = x;
         this.y = y;
         this.curCoin = 0;
-        cc.error(this.curCoin);
-        this.trggerType = 0;
 
         this.next = null;
         this.last = null;
@@ -107,25 +109,12 @@ export default class Flag {
         this.ui.render(this);
     }
 
-    Trgger() {
-        this.curCoin = 0;
-        var call = () => {
-            this.EndTrgger();
-        }
-        this.ui.shake(call);
-    }
-
-    trggerType: number = 0;
-
     //获取触发等级，
-    GetTrggerType(): number {
-        return this.trggerType;
+    GetTrggerLevel(): number {
+        if (this.activeSkill == null) return 0;
+        return this.activeSkill.level;
     }
 
-    //设置触发等级
-    RefreshTrggerType() {
-        this.trggerType = 0;
-    }
 
     IsTrggering(): boolean {
         return this.state == FlagState.Trgger;
@@ -136,13 +125,10 @@ export default class Flag {
         return this.curCoin + this.config.gain;
     }
 
-    Shake(call:Function=null){
+    Shake(call: Function = null) {
         this.ui.shake(call);
     }
 
-    CheckTrgger() {
-        return true;
-    }
 
 
     forEach(call: Function) {
@@ -187,6 +173,49 @@ export default class Flag {
 
         return null;
     }
-    
-    // update (dt) {}
+    Trgger() {
+
+    }
+
+    skillPool: Array<Skill>;
+    activeSkill: Skill;
+
+    AddSkill(id: number) {
+        var skill = FlagFactory.Ins.GetSkill(id);
+        skill.flag = this;
+        this.skillPool.push(skill);
+    }
+
+    CheckTrgger(): boolean {
+        if (this.skillPool.length == 0) return false;
+        this.activeSkill = this.skillPool[0];
+        for (var i = 0; i < this.skillPool.length; i++) {
+            if (this.skillPool[i].CheckSkill()) {
+                this.activeSkill = this.skillPool[i];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    HasSkill(id): Skill {
+        var result = null;
+        this.skillPool.forEach((skill) => {
+            skill.id = id;
+            result = skill;
+        })
+        return result;
+    }
+
+
+    StartExcute() {
+        if (this.CheckTrgger()) {
+            this.activeSkill.ExecuteSkill(() => {
+                this.StartExcute();
+            });
+        } else {
+            this.EndTrgger();
+        }
+    }
+
 }

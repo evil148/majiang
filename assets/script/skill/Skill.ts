@@ -11,25 +11,55 @@ import Flag from "../model/Flag";
 export default class Skill {
 
 
-    id: number;
+    constructor() {
+        this.state = SkillState.wait;
+    }
+
+    name: string;
+    id: number = 0;
     config: SkillConfig;
 
-    wait: boolean;
-    doing: boolean;
-    done: boolean;
+    Wait(): boolean {
+        return this.state == SkillState.wait;
+    };
+    ToDoing() {
+        this.state = SkillState.doing;
+    }
+    Doing(): boolean {
+        return this.state == SkillState.doing;
+    };
+    ToDone() {
+        this.state = SkillState.done;
+    }
+    Done(): boolean {
+        return this.state == SkillState.done;
+    };
+    state: SkillState = SkillState.wait;
     flag: Flag
+    level: number;
+
+    Init() {
+        this.state = SkillState.wait;
+    }
+
     CheckSkill(): boolean {
+        if (this.state != SkillState.wait) return false;
+        //判断当前是否满足触发条件
         return false;
     }
 
 
-    ExecuteSkill() {
+    ExecuteSkill(call) {
+        this.state = SkillState.doing;
+        call();
+    }
 
-
+    EndSkill(call) {
+        this.state = SkillState.done;
     }
 }
 
-enum SkillState {
+export enum SkillState {
     wait,
     doing,
     done
