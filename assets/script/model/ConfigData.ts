@@ -1,6 +1,6 @@
 
 
-export enum SkillType{
+export enum SkillType {
     None,
     Merge,
     Sub,
@@ -146,11 +146,6 @@ const { ccclass, property } = cc._decorator;
 export default class ConfigData extends cc.Component {
 
     static Ins: ConfigData = new ConfigData();
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
 
     configs: FlagConfig[];
 
@@ -158,31 +153,45 @@ export default class ConfigData extends cc.Component {
 
     maps: Map<number, FlagConfig>
 
+    callback: Function
+
     skillMaps: Map<number, SkillConfig>
+
+    loadedCount: number;
+    loadingCount: number;
+
+
     Init(callback: Function) {
-        cc.loader.loadRes("create", (err, jsonAsset: any) => {
-            this.configs = <FlagConfig[]>jsonAsset.json;
-            this.maps = new Map<number, FlagConfig>();
-            this.configs.forEach(element => {
-                this.maps.set(element.id, element);
-                var temp = element.param.toString().split(',');
-                element.param = [];
-                temp.forEach(str => {
-                    var p = Number.parseFloat(str);
-                    element.param.push(p);
+
+        this.callback = callback;
+        this.loadedCount = 0;
+        this.loadingCount = 0;
+        this.Load("create", (err, jsonAsset: any) => {
+            {
+                this.configs = <FlagConfig[]>jsonAsset.json;
+                this.maps = new Map<number, FlagConfig>();
+                this.configs.forEach(element => {
+                    this.maps.set(element.id, element);
+                    var temp = element.param.toString().split(',');
+                    element.param = [];
+                    temp.forEach(str => {
+                        var p = Number.parseFloat(str);
+                        element.param.push(p);
+                    });
+
+                    var temp2 = element.skill.toString().split(',');
+                    element.skill = [];
+                    temp2.forEach(str => {
+                        var p = Number.parseFloat(str);
+                        element.skill.push(p);
+                    });
                 });
 
-                var temp2 = element.skill.toString().split(',');
-                element.skill = [];
-                temp2.forEach(str => {
-                    var p = Number.parseFloat(str);
-                    element.skill.push(p);
-                });
-            });
-            callback();
+            }
         });
 
-        cc.loader.loadRes("skill", (err, jsonAsset: any) => {
+
+        this.Load("skill", (err, jsonAsset: any) => {
             this.skillConfigs = <SkillConfig[]>jsonAsset.json;
             this.skillMaps = new Map<number, SkillConfig>();
             this.skillConfigs.forEach(element => {
@@ -194,9 +203,21 @@ export default class ConfigData extends cc.Component {
                     element.param.push(p);
                 });
             });
-            callback();
         });
     };
+
+
+    Load(path: string, call: Function) {
+        this.loadingCount++;
+        cc.loader.loadRes(path, (err, jsonAsset: any) => {
+            call(err, jsonAsset);
+            this.loadedCount++;
+            if (this.loadedCount == this.loadingCount) {
+                cc.log("加载完成");
+                this.callback();
+            }
+        });
+    }
 
     GetCfg(id: number): FlagConfig {
         if (this.maps.has(id)) {

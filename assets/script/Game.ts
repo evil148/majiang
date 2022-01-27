@@ -37,36 +37,39 @@ export default class Game extends cc.Component {
     start() {
         cc.log("Init");
         Game.Ins = this;
-        let loadCount = 0;
-        ConfigData.Ins.Init(() => {
-            loadCount++;
-            if (loadCount == 2) {
-                for (var i = 0; i < 4; i++) {
-                    this.CreateFlag(-1);
-                }
 
-                for (var i = 0; i < 11; i++) {
-                    this.CreateFlag(1);
-                }
-
-                for (var i = 0; i < 1; i++) {
-                    this.CreateFlag(10);
-                }
-
-                for (var i = 0; i < 4; i++) {
-                    this.curPool.push(new Array<Flag>());
-                    for (var j = 0; j < 4; j++) {
-                        this.curPool[i].push(null);
-                    }
-                }
-            }
-        });
         this.curMap = new Map<number, Array<Flag>>()
         this.allPool = new Array<Flag>();
         this.nonePool = new Array<Flag>();
         this.flagPool = new Array<Flag>();
         this.curPool = new Array<Array<Flag>>();
         this.fsm = new FiniteStateMachine<Game>(this);
+
+        ConfigData.Ins.Init(() => {
+            this.OnLoadComplete();
+        });
+    }
+
+
+    OnLoadComplete() {
+        for (var i = 0; i < 4; i++) {
+            this.CreateFlag(-1);
+        }
+
+        for (var i = 0; i < 11; i++) {
+            this.CreateFlag(1);
+        }
+
+        for (var i = 0; i < 1; i++) {
+            this.CreateFlag(10);
+        }
+
+        for (var i = 0; i < 4; i++) {
+            this.curPool.push(new Array<Flag>());
+            for (var j = 0; j < 4; j++) {
+                this.curPool[i].push(null);
+            }
+        }
     }
 
     test: boolean = true;
@@ -103,18 +106,17 @@ export default class Game extends cc.Component {
         newFlag.RefreshState(oldFlag.x, oldFlag.y, oldFlag.last, oldFlag.next);
         newFlag.SetUI(oldFlag.ui);
         newFlag.CheckTrgger();
-
         this.PopFlag(oldFlag);
         return newFlag;
     }
 
 
-    protected update(dt: number): void {
+    update(dt: number): void {
         this.fsm?.Update(dt);
     }
 
 
-    public CreateFlag(id: number) {
+    CreateFlag(id: number) {
         var flag = FlagFactory.Ins.GetFlag(id);
         flag.init(this);
         this.PushFlag(flag);
@@ -122,7 +124,7 @@ export default class Game extends cc.Component {
     }
 
 
-    public PopFlag(flag: Flag) {
+    PopFlag(flag: Flag) {
         flag.isUse = false;
         this.allPool.remove(flag);
         if (flag.IsNone()) {
@@ -134,7 +136,7 @@ export default class Game extends cc.Component {
 
 
 
-    public PushFlag(flag: Flag) {
+    PushFlag(flag: Flag) {
         this.allPool.push(flag);
         if (flag.IsNone()) {
             this.nonePool.push(flag);
@@ -143,7 +145,7 @@ export default class Game extends cc.Component {
         }
     }
 
-    public TrggerPool() {
+    TrggerPool() {
         var limitCount = 16;
         if (this.allPool.length > limitCount) {
             if (this.nonePool.length != 0) {
@@ -165,7 +167,7 @@ export default class Game extends cc.Component {
         }
     }
 
-    public merge(flags: Flag[]) {
+    merge(flags: Flag[]) {
         this.CreateFlag(flags[0].config.merge);
         this.TrggerPool();
     }
