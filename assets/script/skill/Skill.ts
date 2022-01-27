@@ -11,14 +11,18 @@ import Flag from "../model/Flag";
 export default class Skill {
 
 
-    constructor() {
+    constructor(config: SkillConfig) {
         this.state = SkillState.wait;
+        this.config = config;
     }
 
     name: string;
     id: number = 0;
     config: SkillConfig;
-
+    Refresh() {
+        this.level = 0;
+        this.state = SkillState.wait;
+    }
     Wait(): boolean {
         return this.state == SkillState.wait;
     };
@@ -36,7 +40,7 @@ export default class Skill {
     };
     state: SkillState = SkillState.wait;
     flag: Flag
-    level: number;
+    level: number = 0;
 
     Init() {
         this.state = SkillState.wait;

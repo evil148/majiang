@@ -5,24 +5,15 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { FlagType } from "../model/ConfigData";
 import Flag from "../model/Flag";
-import Tool from "../model/Tool";
+import Skill from "../skill/Skill";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class FlagDice extends Flag {
+export default class FlagRichMan extends Skill {
 
-    override  RefreshTrggerType() {
-        this.trggerType = 1;
-    }
 
-    final: number;
-    override Trgger() {
-        this.curCoin = Tool.GetRandomInt(0, 6);
-        this.ui.Roll((label: cc.Label) => {
-            label.string = this.curCoin + "";
-            this.EndTrgger();
-        });
-    }
+
 }

@@ -7,11 +7,12 @@
 
 import { FlagType } from "../model/ConfigData";
 import Flag from "../model/Flag";
+import Skill from "../skill/Skill";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class FlagRichMan extends Flag {
+export default class FlagCoin extends Skill {
 
 
 

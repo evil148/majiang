@@ -5,9 +5,10 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import TrggerState from "../GameState/TrggerState";
 import Skill from "../skill/Skill";
 import FlagRender from "../view/FlagRender";
-import ConfigData, { FlagConfig, FlagType } from "./ConfigData";
+import ConfigData, { FlagConfig, FlagType, SkillType } from "./ConfigData";
 import FlagCache from "./FlagCache";
 import FlagFactory from "./FlagFactory";
 import Game from "./Game";
@@ -44,8 +45,10 @@ export default class Flag {
         return this.state == FlagState.Gain;
     }
 
-    StartTrgger() {
+    trggerlevel: number;
+    StartTrgger(trggerlevel: number) {
         this.state = FlagState.Trgger;
+        this.trggerlevel = trggerlevel;
         this.StartExcute();
     }
 
@@ -67,7 +70,7 @@ export default class Flag {
         this.game = game;
         this.flagPool = game.curPool;
         this.skillPool = new Array<Skill>();
-        this.AddSkill(0);
+        this.AddSkill();
     }
 
     clear() {
@@ -102,6 +105,10 @@ export default class Flag {
         }
 
         this.state = FlagState.Wait;
+
+        this.skillPool.forEach((skill: Skill) => {
+            skill.Refresh();
+        })
     }
 
     SetUI(ui: FlagRender) {
@@ -180,19 +187,27 @@ export default class Flag {
     skillPool: Array<Skill>;
     activeSkill: Skill;
 
-    AddSkill(id: number) {
-        var skill = FlagFactory.Ins.GetSkill(id);
-        skill.flag = this;
-        this.skillPool.push(skill);
+    AddSkill() {
+        this.config.skill.forEach((id) => {
+            var skill = FlagFactory.Ins.GetSkill(id);
+            if (skill != null) {
+                skill.flag = this;
+                this.skillPool.push(skill);
+            }
+        })
     }
 
-    CheckTrgger(): boolean {
+    CheckTrgger(trggerlevel = -1): boolean {
         if (this.skillPool.length == 0) return false;
         this.activeSkill = this.skillPool[0];
         for (var i = 0; i < this.skillPool.length; i++) {
             if (this.skillPool[i].CheckSkill()) {
-                this.activeSkill = this.skillPool[i];
-                return true;
+                if (trggerlevel != -1 && this.skillPool[i].level != trggerlevel) {
+                    continue
+                } else {
+                    this.activeSkill = this.skillPool[i];
+                    return true;
+                }
             }
         }
         return false;
@@ -209,7 +224,7 @@ export default class Flag {
 
 
     StartExcute() {
-        if (this.CheckTrgger()) {
+        if (this.CheckTrgger(this.trggerlevel)) {
             this.activeSkill.ExecuteSkill(() => {
                 this.StartExcute();
             });
@@ -217,5 +232,4 @@ export default class Flag {
             this.EndTrgger();
         }
     }
-
 }

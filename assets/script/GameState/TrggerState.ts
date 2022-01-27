@@ -74,7 +74,9 @@ export default class TrggerState implements IState<Game> {
                     if (needT) {
                         this.trggerCount++;
                         if (checkT) {
-                            this.curFlag.StartTrgger();
+                            this.curFlag.StartTrgger(this.trggerlevel);
+                        }else{
+                            this.curFlag.EndTrgger();
                         }
                     }
                 } else {

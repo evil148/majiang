@@ -1,5 +1,16 @@
 
 
+export enum SkillType{
+    None,
+    Merge,
+    Sub,
+    Add,
+    Div,
+    Mul,
+    Destory,
+    Dice,
+}
+
 export enum FlagType {
     //空
     None,
@@ -85,7 +96,27 @@ export enum FlagType {
 
 }
 
-export enum FlagGroup { }
+export class FlagGroup {
+}
+export class SkillConfig {
+    constructor(id, name, type, gain, merge, param) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.gain = gain;
+        this.merge = merge;
+        this.param = param;
+    }
+    id: number;
+    name: string;
+    icon: string;
+    type: SkillType;
+    gain: number;
+    merge: number;
+    quality: number;
+    param: number[];
+    desc: string;
+}
 
 export class FlagConfig {
     constructor(id, name, type, gain, merge, param) {
@@ -102,7 +133,7 @@ export class FlagConfig {
     type: FlagType;
     group: FlagGroup;
     gain: number;
-    gainType: number;
+    skill: number[];
     merge: number;
     quality: number;
     param: number[];
@@ -123,13 +154,39 @@ export default class ConfigData extends cc.Component {
 
     configs: FlagConfig[];
 
+    skillConfigs: SkillConfig[];
+
     maps: Map<number, FlagConfig>
+
+    skillMaps: Map<number, SkillConfig>
     Init(callback: Function) {
         cc.loader.loadRes("create", (err, jsonAsset: any) => {
             this.configs = <FlagConfig[]>jsonAsset.json;
             this.maps = new Map<number, FlagConfig>();
             this.configs.forEach(element => {
                 this.maps.set(element.id, element);
+                var temp = element.param.toString().split(',');
+                element.param = [];
+                temp.forEach(str => {
+                    var p = Number.parseFloat(str);
+                    element.param.push(p);
+                });
+
+                var temp2 = element.skill.toString().split(',');
+                element.skill = [];
+                temp2.forEach(str => {
+                    var p = Number.parseFloat(str);
+                    element.skill.push(p);
+                });
+            });
+            callback();
+        });
+
+        cc.loader.loadRes("skill", (err, jsonAsset: any) => {
+            this.skillConfigs = <SkillConfig[]>jsonAsset.json;
+            this.skillMaps = new Map<number, SkillConfig>();
+            this.skillConfigs.forEach(element => {
+                this.skillMaps.set(element.id, element);
                 var temp = element.param.toString().split(',');
                 element.param = [];
                 temp.forEach(str => {
@@ -151,11 +208,17 @@ export default class ConfigData extends cc.Component {
 
     }
 
-    GetSkillCfg(id: number): FlagConfig {
-        return null;
+    GetSkillCfg(id: number): SkillConfig {
+        if (this.skillMaps.has(id)) {
+            return this.skillMaps.get(id);
+        } else {
+            cc.error(id + " :没有对应数据");
+            return null;
+        }
     }
+
     GetCanUse(): FlagConfig {
-        var id = Math.ceil(Math.random() * 13);
+        var id = Math.ceil(Math.random() * 16);
         return this.GetCfg(id);
     }
 }

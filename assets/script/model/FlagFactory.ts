@@ -5,17 +5,18 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import FlagAdd from "../flag/FlagAdd";
-import FlagCoin from "../flag/FlagCoin";
-import FlagDice from "../flag/FlagDice";
-import FlagDiv from "../flag/FlagDiv";
-import FlagMerge from "../flag/FlagMerge";
-import FlagMul from "../flag/FlagMul";
-import FlagRichMan from "../flag/FlagRichMan";
-import FlagSub from "../flag/FlagSub";
+
+import SkillAdd from "../flag/SkillAdd";
+import SkillCoin from "../flag/SkillCoin";
+import SkillDice from "../flag/SkillDice";
+import SkillDiv from "../flag/SkillDiv";
+import SkillDestory from "../flag/SkilllDestory";
+import SkillMul from "../flag/SkillMul";
+import SkillRichMan from "../flag/SkillRichMan";
+import SkillSub from "../flag/SkillSub";
 import Skill from "../skill/Skill";
 import SkillMerge from "../skill/SkillMerge";
-import ConfigData, { FlagConfig, FlagType } from "./ConfigData";
+import ConfigData, { FlagConfig, FlagType, SkillType } from "./ConfigData";
 import Flag from "./Flag";
 
 const { ccclass, property } = cc._decorator;
@@ -27,31 +28,25 @@ export default class FlagFactory {
 
     GetFlag(id: number) {
         var cfg = ConfigData.Ins.GetCfg(id);
+        return new Flag(cfg);
 
-        switch (cfg.type) {
-            case FlagType.Baby: return new Flag(cfg);
-            case FlagType.Pupil: return new Flag(cfg);
-            case FlagType.MiddleStudent: return new Flag(cfg);
-            case FlagType.CollegeStudent: return new Flag(cfg);
-            case FlagType.Master: return new Flag(cfg);
-            case FlagType.Professor: return new Flag(cfg);
-            case FlagType.Principal: return new Flag(cfg);
-            case FlagType.Dean: return new Flag(cfg);
-            case FlagType.Add: return new FlagAdd(cfg);
-            case FlagType.Sub: return new FlagSub(cfg);
-            case FlagType.Mul: return new FlagMul(cfg);
-            case FlagType.Div: return new FlagDiv(cfg);
-            case FlagType.Coin: return new FlagCoin(cfg);
-            case FlagType.Dice: return new FlagDice(cfg);
-            case FlagType.RichMan: return new FlagRichMan(cfg);
- 
-            default: return new Flag(cfg);
-
-        }
     }
-    
-    GetSkill(id: number):any {
+
+    GetSkill(id: number): any {
         var cfg = ConfigData.Ins.GetSkillCfg(id);
-        return new SkillMerge();
+
+        if (cfg != null) {
+            switch (cfg.type) {
+                case SkillType.Merge: return new SkillMerge(cfg);
+                case SkillType.Sub: return new SkillSub(cfg);
+                case SkillType.Add: return new SkillAdd(cfg);
+                case SkillType.Div: return new SkillDiv(cfg);
+                case SkillType.Mul: return new SkillMul(cfg);
+                case SkillType.Destory: return new SkillDestory(cfg);
+                case SkillType.Dice: return new SkillDice(cfg);
+                default:
+            }
+        }
+        return null;
     }
 }

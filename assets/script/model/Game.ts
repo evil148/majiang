@@ -5,7 +5,6 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import FlagCoin from "../flag/FlagCoin";
 import FiniteStateMachine from "../GameState/FiniteStateMachine";
 import TrggerState from "../GameState/TrggerState";
 import FlagRender from "../view/FlagRender";
@@ -40,24 +39,27 @@ export default class Game extends cc.Component {
     start() {
         cc.log("Init");
         Game.Ins = this;
+        let loadCount = 0;
         ConfigData.Ins.Init(() => {
+            loadCount++;
+            if (loadCount == 2) {
+                for (var i = 0; i < 4; i++) {
+                    this.CreateFlag(-1);
+                }
 
-            for (var i = 0; i < 4; i++) {
-                this.CreateFlag(-1);
-            }
+                for (var i = 0; i < 11; i++) {
+                    this.CreateFlag(1);
+                }
 
-            for (var i = 0; i < 11; i++) {
-                this.CreateFlag(1);
-            }
+                for (var i = 0; i < 1; i++) {
+                    this.CreateFlag(10);
+                }
 
-            for (var i = 0; i < 1; i++) {
-                this.CreateFlag(10);
-            }
-
-            for (var i = 0; i < 4; i++) {
-                this.curPool.push(new Array<Flag>());
-                for (var j = 0; j < 4; j++) {
-                    this.curPool[i].push(null);
+                for (var i = 0; i < 4; i++) {
+                    this.curPool.push(new Array<Flag>());
+                    for (var j = 0; j < 4; j++) {
+                        this.curPool[i].push(null);
+                    }
                 }
             }
         });
@@ -69,32 +71,32 @@ export default class Game extends cc.Component {
         this.fsm = new FiniteStateMachine<Game>(this);
     }
 
-
+    test: boolean = true;
     //把当前flag池随机到4x4里面
     public OnBtnRoll(): void {
         var temp = this.allPool.concat();
         var last = null as Flag;
-        var test = true;
+
         var array = [
             1, 1, 1, 1,
-            1, 1, 1, 1,
-            2, 3, 3, 2,
-            1, 1, 1, 1,
+            13, 15, 14, 16,
+            13, 15, 14, 16,
+            11, 11, 11, 11,
         ]
 
         for (var i = 0; i < this.curPool.length; i++) {
             var list = this.curPool[i];
             for (var j = 0; j < list.length; j++) {
                 var item = Tool.GetItem(temp, true) as Flag;
-                if (test) item = this.CreateFlag(array[((3 - i) * 4 + j)]);
+                if (this.test) item = this.CreateFlag(array[((3 - i) * 4 + j)]);
+
                 list[j] = item;
                 item.RefreshState(i, j, last, null);
                 item.SetUI(UIMgr.Ins.mainPanel.renderPool[i][j]);
                 last = item;
             }
         }
-
-
+        this.test = false;
     }
 
     ChangeFlag(oldFlag: Flag, newId: number): Flag {
