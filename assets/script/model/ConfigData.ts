@@ -226,7 +226,6 @@ export default class ConfigData extends cc.Component {
             cc.error(id + " :没有对应数据");
             return null;
         }
-
     }
 
     GetSkillCfg(id: number): SkillConfig {
@@ -238,10 +237,7 @@ export default class ConfigData extends cc.Component {
         }
     }
 
-    GetCanUse(): FlagConfig {
-        var id = Math.ceil(Math.random() * 16);
-        return this.GetCfg(id);
-    }
+
 }
 
 

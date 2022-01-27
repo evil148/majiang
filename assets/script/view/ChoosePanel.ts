@@ -1,5 +1,6 @@
 import Game from "../Game";
 import ConfigData, { FlagConfig } from "../model/ConfigData";
+import PoolMgr from "../model/PoolMgr";
 import CfgRender from "./CfgRender";
 
 
@@ -36,7 +37,7 @@ export default class ChoosePanel extends cc.Component {
         this.node.active = true;
         this.choosePool = new Array<FlagConfig>();
         while (this.choosePool.length < 3) {
-            var item = ConfigData.Ins.GetCanUse();
+            var item = PoolMgr.Ins.GetCanUse();
             if (this.choosePool.indexOf(item) == -1) {
                 this.choosePool.push(item);
             }
@@ -61,6 +62,4 @@ export default class ChoosePanel extends cc.Component {
         this.node.active = false;
     }
 
-
-    // update (dt) {}
 }
