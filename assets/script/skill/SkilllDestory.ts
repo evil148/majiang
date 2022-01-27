@@ -1,7 +1,6 @@
 
-import TrggerState from "../GameState/TrggerState";
+import Flag from "../flag/Flag";
 import { FlagType } from "../model/ConfigData";
-import Flag from "../model/Flag";
 import Skill from "../skill/Skill";
 
 

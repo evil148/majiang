@@ -1,22 +1,11 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
-
-import SkillAdd from "../flag/SkillAdd";
-import SkillCoin from "../flag/SkillCoin";
-import SkillDice from "../flag/SkillDice";
-import SkillDiv from "../flag/SkillDiv";
-import SkillDestory from "../flag/SkilllDestory";
-import SkillMul from "../flag/SkillMul";
-import SkillRichMan from "../flag/SkillRichMan";
-import SkillSub from "../flag/SkillSub";
-import Skill from "../skill/Skill";
+import ConfigData, { SkillType } from "../model/ConfigData";
+import SkillAdd from "../skill/SkillAdd";
+import SkillDice from "../skill/SkillDice";
+import SkillDiv from "../skill/SkillDiv";
+import SkillDestory from "../skill/SkilllDestory";
 import SkillMerge from "../skill/SkillMerge";
-import ConfigData, { FlagConfig, FlagType, SkillType } from "./ConfigData";
+import SkillMul from "../skill/SkillMul";
+import SkillSub from "../skill/SkillSub";
 import Flag from "./Flag";
 
 const { ccclass, property } = cc._decorator;

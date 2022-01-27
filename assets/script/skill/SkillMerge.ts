@@ -1,12 +1,6 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import Flag from "../flag/Flag";
 import TrggerState from "../GameState/TrggerState";
-import Flag from "../model/Flag";
 import Skill, { SkillState } from "./Skill";
 
 export default class SkillMerge extends Skill {

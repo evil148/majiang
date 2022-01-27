@@ -1,14 +1,5 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
+import Game from "../Game";
 import ConfigData, { FlagConfig } from "../model/ConfigData";
-import Flag from "../model/Flag";
-import Game from "../model/Game";
-import Tool from "../model/Tool";
 import CfgRender from "./CfgRender";
 
 

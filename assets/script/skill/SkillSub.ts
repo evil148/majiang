@@ -1,17 +1,6 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+import Skill from "./Skill";
 
-import Flag from "../model/Flag";
-import Skill from "../skill/Skill";
-
-const { ccclass, property } = cc._decorator;
-
-@ccclass
-export default class SkillAdd extends Skill {
+export default class SkillSub extends Skill {
     override  CheckSkill() {
         if (this.Wait()) {
             var left = this.flag.LeftFlag();
@@ -32,12 +21,11 @@ export default class SkillAdd extends Skill {
         if (left != null && right != null) {
             if (!left.IsNone() && !right.IsNone()) {
                 this.ToDoing();
-                this.flag.curCoin = left.GetCoin() + right.GetCoin();
+                this.flag.curCoin = left.GetCoin() - right.GetCoin();
                 this.flag.ui.shake(() => {
                     call();
                 })
             }
         }
     }
-
 }

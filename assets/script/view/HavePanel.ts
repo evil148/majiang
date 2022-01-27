@@ -1,12 +1,5 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
-import Flag from "../model/Flag";
-import Game from "../model/Game";
+import Flag from "../flag/Flag";
+import Game from "../Game";
 import FlagRender from "./FlagRender";
 
 const { ccclass, property } = cc._decorator;
@@ -35,7 +28,7 @@ export default class HavePanel extends cc.Component {
             var node = cc.instantiate(this.prefab);
             node.parent = this.content;
             var comp = node.getComponent<FlagRender>(FlagRender);
-            node.runAction(cc.sequence(cc.delayTime(0.1), cc.callFunc(() => { comp.render(element, false) })));
+            node.runAction(cc.sequence(cc.delayTime(0.1), cc.callFunc(() => { comp.render(element) })));
         });
     }
     close() {

@@ -1,17 +1,9 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
+import Flag from "../flag/Flag";
+import Game from "../Game";
 import TrggerState from "../GameState/TrggerState";
-import Flag from "../model/Flag";
-import FlagFactory from "../model/FlagFactory";
-import Game from "../model/Game";
-import ChoosePanel from "./ChoosePanel";
 import FlagRender from "./FlagRender";
 import UIMgr from "./UIMgr";
+
 
 const { ccclass, property } = cc._decorator;
 

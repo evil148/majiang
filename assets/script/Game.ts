@@ -5,15 +5,13 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import FiniteStateMachine from "../GameState/FiniteStateMachine";
-import TrggerState from "../GameState/TrggerState";
-import FlagRender from "../view/FlagRender";
-import MainPanel from "../view/MainPanel";
-import UIMgr from "../view/UIMgr";
-import ConfigData, { FlagConfig, FlagType } from "./ConfigData";
-import Flag from "./Flag";
-import FlagFactory from "./FlagFactory";
-import Tool from "./Tool";
+import Flag from "./flag/Flag";
+import FlagFactory from "./flag/FlagFactory";
+import FiniteStateMachine from "./GameState/FiniteStateMachine";
+import ConfigData from "./model/ConfigData";
+import Tool from "./model/Tool";
+import UIMgr from "./view/UIMgr";
+
 
 const { ccclass, property } = cc._decorator;
 

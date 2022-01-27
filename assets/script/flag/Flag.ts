@@ -1,18 +1,9 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
-import TrggerState from "../GameState/TrggerState";
+import Game from "../Game";
+import { FlagConfig, FlagType } from "../model/ConfigData";
 import Skill from "../skill/Skill";
 import FlagRender from "../view/FlagRender";
-import ConfigData, { FlagConfig, FlagType, SkillType } from "./ConfigData";
 import FlagCache from "./FlagCache";
 import FlagFactory from "./FlagFactory";
-import Game from "./Game";
-import Tool from "./Tool";
 
 enum FlagState {
     Wait,

@@ -1,18 +1,8 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
-import Flag from "../model/Flag";
-import Game from "../model/Game";
-import Singleton from "../Singleton";
+import Flag from "../flag/Flag";
+import Game from "../Game";
 import UIMgr from "../view/UIMgr";
 import IdleState from "./IdleState";
 import IState from "./IState";
-
-
 
 export default class GainState implements IState<Game> {
 
