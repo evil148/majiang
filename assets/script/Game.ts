@@ -79,10 +79,10 @@ export default class Game extends cc.Component {
         var last = null as Flag;
 
         var array = [
-            1, 1, 1, 1,
-            13, 15, 14, 16,
-            13, 15, 14, 16,
-            11, 11, 11, 11,
+            -1, -1, -1, -1,
+            -1, -1, -1, -1,
+            17, -1, -1, -1,
+            -1, -1, -1, -1
         ]
 
         for (var i = 0; i < this.curPool.length; i++) {

@@ -183,6 +183,7 @@ export default class Flag {
             var skill = FlagFactory.Ins.GetSkill(id);
             if (skill != null) {
                 skill.flag = this;
+                skill.InitSkill();
                 this.skillPool.push(skill);
             }
         })

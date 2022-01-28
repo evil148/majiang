@@ -12,9 +12,20 @@ export default class FlagRender extends cc.Component {
     label: cc.Label = null;
 
     @property(cc.Label)
+    roundLabel: cc.Label = null;
+    @property(cc.Label)
+    storeLabel: cc.Label = null;
+
+    @property(cc.Label)
     coinLabel: cc.Label = null;
     @property(cc.Node)
     arrow: cc.Node = null;
+
+    @property(cc.Color)
+    addColor: cc.Color;
+
+    @property(cc.Color)
+    subdColor: cc.Color;
 
 
     next: FlagRender;
@@ -36,10 +47,13 @@ export default class FlagRender extends cc.Component {
 
     render(flag: Flag) {
         this.label.string = flag.config.name;
+        this.roundLabel.node.active = false;
     }
 
     upCoin(num: number) {
-        this.coinLabel.string = num > 0 ? "+" + num : "" + num;
+        cc.log(num);
+        this.coinLabel.string = num >= 0 ? "+" + num : "" + num;
+        this.coinLabel.node.color = num >= 0 ? this.addColor : this.subdColor;
         this.coinLabel.node.runAction(
             cc.sequence(
                 cc.moveTo(0, cc.v2(0, -26)),

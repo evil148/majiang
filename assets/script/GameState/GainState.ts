@@ -29,6 +29,7 @@ export default class GainState implements IState<Game> {
         this.trggerCoin = Number.MAX_VALUE;
         game.ForEach((e: Flag) => {
             var coin = e.GetCoin();
+            cc.log(coin);
             if (coin != 0 && coin < this.trggerCoin) {
                 this.trggerCoin = coin;
             }

@@ -1281,6 +1281,7 @@
     "label": {
       "__id__": 22
     },
+    "roundLabel": null,
     "coinLabel": {
       "__id__": 25
     },

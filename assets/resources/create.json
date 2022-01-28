@@ -222,16 +222,16 @@
     },
     {
         "id": 17,
-        "name": 6,
+        "name": "贷款",
         "type": 17,
         "icon": 17,
         "group": 9,
-        "gain": 10,
-        "skill": 10,
+        "gain": 0,
+        "skill": 8,
         "merge": 11,
         "quality": 12,
-        "param": 13,
-        "desc": 14
+        "param": "100,10,15",
+        "desc": "贷款"
     },
     {
         "id": 18,

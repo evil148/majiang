@@ -34,8 +34,8 @@ export default class Skill {
     flag: Flag
     level: number = 0;
 
-    Init() {
-        this.state = SkillState.wait;
+    InitSkill() {
+
     }
 
     CheckSkill(): boolean {

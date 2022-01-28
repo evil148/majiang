@@ -104,7 +104,7 @@ export default class MainPanel extends cc.Component {
     OnAddCoin(num) {
         this.addCoin.node.opacity = 255;
         this.addCoin.node.scale = 1;
-        this.addCoin.string = "+" + num;
+        this.addCoin.string = num >= 0 ? "+" + num : "" + num;
     }
 
     OnResult(num) {

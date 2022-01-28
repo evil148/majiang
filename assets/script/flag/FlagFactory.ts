@@ -3,6 +3,7 @@ import SkillAdd from "../skill/SkillAdd";
 import SkillDice from "../skill/SkillDice";
 import SkillDiv from "../skill/SkillDiv";
 import SkillDestory from "../skill/SkilllDestory";
+import SkillLoan from "../skill/SkillLoan";
 import SkillMerge from "../skill/SkillMerge";
 import SkillMul from "../skill/SkillMul";
 import SkillSub from "../skill/SkillSub";
@@ -33,6 +34,7 @@ export default class FlagFactory {
                 case SkillType.Mul: return new SkillMul(cfg);
                 case SkillType.Destory: return new SkillDestory(cfg);
                 case SkillType.Dice: return new SkillDice(cfg);
+                case SkillType.Loan: return new SkillLoan(cfg);
                 default:
             }
         }
